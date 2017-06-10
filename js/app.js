@@ -33,14 +33,16 @@ function draw() {
   drawBall();
   drawPaddle();
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-    var randomColor = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
-    ctx.fillStyle = colors[randomColor];
     dx = -dx;
   }
-  if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
-    var randomColor = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
-    ctx.fillStyle = colors[randomColor];
+  if (y + dy < ballRadius) {
     dy = -dy;
+  } else if (y + dy > canvas.height - ballRadius) {
+    if (x > paddleX && x < paddleX + paddleWidth) {
+      dy = -dy;
+    } else {
+      document.location.reload();
+    }
   }
   if (rightPressed && paddleX < canvas.width - paddleWidth) {
     paddleX += 7;
